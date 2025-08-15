@@ -43,7 +43,6 @@ function scrollToSection(index) {
   isScrolling = true;
 
   // 현재 index에 맞는 section으로 이동
-  const headerHeight = document.querySelector("header")?.offsetHeight || 0;
   window.scrollTo({
     top: sections[index].offsetTop,
     behavior: "smooth"
@@ -78,11 +77,16 @@ window.addEventListener("touchstart", (e) => {
 
 // 모바일 터치 끝
 window.addEventListener("touchend", (e) => {
+  if (isScrolling) return;
+
   const diff = startY - e.changedTouches[0].clientY;
-  if (Math.abs(diff) > 50) {
-    if (diff > 0 && currentIndex < sections.length - 1) currentIndex++;
-    else if (diff < 0 && currentIndex > 0) currentIndex--;
-    showSection(currentIndex);
+  if (Math.abs(diff) > scrollThreshold) {
+    if (diff > 0 && currentIndex < sections.length - 1) {
+      currentIndex++;
+    } else if (diff < 0 && currentIndex > 0) {
+      currentIndex--;
+    }
+    scrollToSection(currentIndex); // ← showSection 대신 scrollToSection 사용
   }
 });
 
