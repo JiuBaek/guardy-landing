@@ -162,6 +162,12 @@ header {
   overflow: hidden;
   z-index: 1;
 }
+
+.section:last-child {
+  min-height: 100vh; /* 부족하면 채움 */
+  scroll-snap-align: end; /* 마지막은 끝으로 붙게 */
+}
+
 section {
   position: relative; /* ::before 위치 지정용 */
 }

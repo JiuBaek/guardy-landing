@@ -106,3 +106,17 @@ form.addEventListener("submit", function(e) {
   })
   .catch(err => console.error(err));
 });
+
+document.querySelectorAll('.btn[data-target]').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const id = btn.getAttribute('data-target');
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
