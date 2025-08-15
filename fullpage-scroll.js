@@ -86,11 +86,6 @@ window.addEventListener("touchend", (e) => {
   }
 });
 
-// 모바일에서 기본 스크롤 막기 (페이지 단위 이동만 허용)
-window.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-}, { passive: false });
-
 
 form.addEventListener("submit", function(e) {
   e.preventDefault();
