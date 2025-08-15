@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guardy – Your travel safety guide</title>
+  <meta name="description" content="Travel with context, not guesses. Guardy gives trustworthy safety insights for the exact place you’re going." />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Guardy – Your travel safety guide" />
+  <meta property="og:description" content="Get trustworthy safety insights for the exact place you’re going." />
+  <meta property="og:image" content="og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<div id="thankyou-popup" style="
+  display:none;
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#28a745;
+  color:white;
+  padding:12px 20px;
+  border-radius:8px;
+  font-size:14px;
+  z-index:9999;
+">
+  Thank you! You’ve joined the waitlist
+</div>
+
+<body>
+  <header class="hero-header">
+        <div class="container nav">
+          <img src="./images/logo.png" alt="Guardy" class="brand-logo" />
+          <nav>
+            <a href="#about">ABOUT US</a>
+          </nav>
+        </div>
+      </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-overlay"></div> <!-- 파란 오버레이 -->
+      <div class="hero-content">
+        <h1>Your personal travel safety guide</h1>
+        <p>Travel without worries — travel with Guardy</p>
+        <a href="#waitlist" class="btn">Join the waitlist</a>
+      </div>
+    </section>
+
+    <div class="section-wrapper">
+      <section class="section">
+        <img src="./images/mobile_1.png" alt="Page 1" />
+      </section>
+      <section class="section">
+        <img src="./images/mobile_2.png" alt="Page 2" />
+      </section>
+      <section class="section">
+        <img src="./images/mobile_3.png" alt="Page 3" />
+      </section>
+      <section class="section">
+        <img src="./images/mobile_4.png" alt="Page 4" />
+      </section>
+      <section class="section">
+        <img src="./images/review.png" alt="review" />
+      </section>
+      <section class="section">
+        <img src="./images/mascott.png" alt="mascott" />
+      </section>
+    </div>
+
+
+
+  <section id="waitlist" class="waitlist">
+      <div class="container">
+        <h2 class="wl-title">Join the waitlist</h2>
+        <p class="wl-subtitle">
+          Guardy is launching soon.<br>
+          Join the waitlist now and get free access!
+        </p>
+
+        <form class="wl-form" method="POST" action="https://script.google.com/macros/s/AKfycbyMNHXSN1mYMtXNM4zNWilee_EGfVCeFqDxOZeSqRKrr3ZBLgI_s5XJmPOo-F3EgSxk/exec">
+          <div class="wl-row">
+            <input name="name" type="text" placeholder="Name" required />
+            <input name="email" type="email" placeholder="Email" required />
+          </div>
+          <textarea name="note" rows="3" placeholder="Any opinion (optional)"></textarea>
+          <input type="hidden" name="utm" id="utmField" />
+          <input type="text" name="company" style="display:none" tabindex="-1" autocomplete="off" />
+          <button type="submit" class="wl-btn">SEND</button>
+        </form>
+      </div>
+    </section>
+
+<footer class="footer">
+  <div class="container">
+    <p class="footer-text">
+      Follow Guardy’s Instagram<br>for the latest updates
+      <span class="footer-line"></span>
+      <a href="https://instagram.com/guardy.official" target="_blank" class="insta-link">
+        <i class="fab fa-instagram" style="font-size: 32px; color: #fbfbfb;"></i>
+      </a>
+    </p>
+    <img src="./images/logo.png" alt="Guardy Logo" class="footer-logo">
+    <hr class="footer-divider">
+    <p class="footer-copy">© 2025 Guardy. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+
+<script src="./fullpage-scroll.js"></script>
+  <script>
+    function updateLogoByBackground() {
+      const header = document.querySelector(".hero-header");
+      const logo = document.querySelector(".hero-header .brand-logo");
+      const sections = document.querySelectorAll("section");
+
+      const centerY = window.innerHeight / 2;
+
+      for (const sec of sections) {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top <= centerY && rect.bottom >= centerY) {
+          const bgColor = window.getComputedStyle(sec).backgroundColor;
+
+          if (bgColor === "rgb(255, 255, 255)") {
+            // 배경이 white일 때
+            logo.src = "./images/logo_blue.png";
+            header.classList.add("scrolled");
+          } else {
+            // 배경이 white가 아닐 때
+            logo.src = "./images/logo.png";
+            header.classList.remove("scrolled");
+          }
+          break;
+        }
+      }
+    }
+
+    window.addEventListener("scroll", updateLogoByBackground);
+    window.addEventListener("resize", updateLogoByBackground);
+    document.addEventListener("DOMContentLoaded", updateLogoByBackground);
+  </script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector(".wl-form");
+    const popup = document.getElementById("thankyou-popup");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form)
+      })
+      .then(res => res.text())
+      .then(text => {
+        console.log("📡 Server response:", text); // 콘솔에 서버 응답 출력
+
+        if (text.includes("SUCCESS")) {
+          popup.style.display = "block";
+          setTimeout(() => popup.style.display = "none", 3000);
+          form.reset();
+        } else {
+          alert("⚠️ Server error: " + text);
+        }
+      })
+      .catch(err => {
+        console.error("❌ Fetch error:", err);
+        alert("Network error: " + err.message);
+      });
+    });
+  });
+  </script>
+
+</html>
