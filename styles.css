@@ -102,7 +102,7 @@ header {
 }
 
 .hero-content h1 {
-  font-size: clamp(48px, 6vw, 48px);
+  font-size: clamp(40px, 6vw, 48px);
   font-weight: 700;
   margin-bottom: 2px;
 }
