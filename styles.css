@@ -24,8 +24,6 @@ body {
 html, body {
   height: 100%;
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory; /* 수직 스냅 활성화 */
-  overflow-y: scroll;
 }
 
 /* Header */
