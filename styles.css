@@ -150,7 +150,7 @@ header {
 
 /* Sections */
 .section {
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background-color: white;
   scroll-snap-align: start;
   transform: translateY(0);
@@ -161,11 +161,6 @@ header {
   position: relative;
   overflow: hidden;
   z-index: 1;
-}
-
-.section:last-child {
-  min-height: 100vh; /* 부족하면 채움 */
-  scroll-snap-align: end; /* 마지막은 끝으로 붙게 */
 }
 
 section {
