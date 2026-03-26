@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<div id="thankyou-popup" style="
+<!-- <div id="thankyou-popup" role="status" aria-live="polite" style="
   display:none;
   position:fixed;
   bottom:20px;
@@ -30,12 +30,12 @@
   z-index:9999;
 ">
   Thank you! You’ve joined the waitlist
-</div>
+</div> -->
 
 <body>
   <header class="hero-header">
         <div class="container nav">
-          <img src="./images/logo.png" alt="Guardy" class="brand-logo" />
+          <img src="./images/logo.png" alt="Guardy" class="brand-logo" loading="lazy"/>
           <nav>
             <a href="#about">ABOUT US</a>
           </nav>
@@ -43,39 +43,78 @@
       </header>
 
   <main>
-    <section class="hero">
-      <div class="hero-overlay"></div> <!-- 파란 오버레이 -->
-      <div class="hero-content">
-        <h1>Your personal travel safety guide</h1>
-        <p>Travel without worries — travel with Guardy</p>
-        <a href="#waitlist" class="btn">Join the waitlist</a>
-      </div>
-    </section>
+ 
+    <!-- ==============================
+         PC 버전 (1024px 이상에서만 표시)
+         이미지 파일명만 바꿔서 사용하세요
+    =============================== -->
+    <div class="pc-version">
+    <section class="img-section"><img src="./images/pc_guardy.png" .../></section>
+    <section class="img-section"><img src="./images/pc_1.png" .../></section>
+    <section class="img-section"><img src="./images/pc_2.png" .../></section>
+    <section class="img-section"><img src="./images/pc_3.png" .../></section>
+    <section class="img-section"><img src="./images/pc_4.png" .../></section>
+  </div>
 
-    <div class="section-wrapper">
-      <section class="section">
-        <img src="./images/mobile_1.png" alt="Page 1" />
+  <section class="img-section carousel-overlay-section">
+    <img src="./images/pc_5.png" alt="PC Section 5" loading="lazy"/>
+    <div class="carousel-wrapper">
+      <div class="carousel-track">
+        <div class="carousel-card"><img src="./images/review_1.png" .../></div>
+        <div class="carousel-card"><img src="./images/review_2.png" .../></div>
+        <div class="carousel-card"><img src="./images/review_3.png" .../></div>
+        <!-- 복제 -->
+        <div class="carousel-card" aria-hidden="true"><img src="./images/review_1.png" .../></div>
+        <div class="carousel-card" aria-hidden="true"><img src="./images/review_2.png" .../></div>
+        <div class="carousel-card" aria-hidden="true"><img src="./images/review_3.png" .../></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PC 뒷부분 -->
+  <div class="pc-version">
+    <section class="img-section"><img src="./images/pc_6.png" .../></section>
+    <section class="img-section"><img src="./images/pc_footer.png" .../></section>
+  </div>
+
+ 
+    <!-- ==============================
+         모바일 버전 (1023px 이하에서만 표시)
+         이미지 파일명만 바꿔서 사용하세요
+    =============================== -->
+    <div class="mobile-version">
+      <section class="img-section">
+        <img src="./images/mobile_guardy.png" alt="Mobile Section 1" loading="lazy"/>
       </section>
-      <section class="section">
-        <img src="./images/mobile_2.png" alt="Page 2" />
+      <section class="img-section">
+        <img src="./images/mobile_1.png" alt="Mobile Section 2" loading="lazy"/>
       </section>
-      <section class="section">
-        <img src="./images/mobile_3.png" alt="Page 3" />
+      <section class="img-section">
+        <img src="./images/mobile_2.png" alt="Mobile Section 3" loading="lazy"/>
       </section>
-      <section class="section">
-        <img src="./images/mobile_4.png" alt="Page 4" />
+      <section class="img-section">
+        <img src="./images/mobile_3.png" alt="Mobile Section 4" loading="lazy"/>
       </section>
-      <section class="section">
-        <img src="./images/review.png" alt="review" />
+      <section class="img-section">
+        <img src="./images/mobile_4.png" alt="Mobile Section 4" loading="lazy"/>
       </section>
-      <section class="section">
-        <img src="./images/mascott.png" alt="mascott" />
+      <section class="img-section">
+        <img src="./images/mobile_6.png" alt="Mobile Section 4" loading="lazy"/>
       </section>
+      <section class="img-section">
+        <img src="./images/mobile_footer.png" alt="Mobile Section 4" loading="lazy"/>
+      </section>
+      <!-- 섹션 추가하려면 아래 블록 복붙 -->
+      <!-- <section class="img-section">
+        <img src="./images/mobile_5.png" alt="Mobile Section 5" loading="lazy"/>
+      </section> -->
     </div>
 
+  </main>
 
 
-  <section id="waitlist" class="waitlist">
+
+  <!-- <section id="waitlist" class="waitlist">
       <div class="container">
         <h2 class="wl-title">Join the waitlist</h2>
         <p class="wl-subtitle">
@@ -94,9 +133,9 @@
           <button type="submit" class="wl-btn">SEND</button>
         </form>
       </div>
-    </section>
+    </section> -->
 
-<footer class="footer">
+<!-- <footer class="footer">
   <div class="container">
     <p class="footer-text">
       Follow Guardy’s Instagram<br>for the latest updates
@@ -105,77 +144,36 @@
         <i class="fab fa-instagram" style="font-size: 32px; color: #fbfbfb;"></i>
       </a>
     </p>
-    <img src="./images/logo.png" alt="Guardy Logo" class="footer-logo">
+    <img src="./images/logo.png" alt="Guardy Logo" class="footer-logo" loading="lazy">
     <hr class="footer-divider">
     <p class="footer-copy">© 2025 Guardy. All rights reserved.</p>
   </div>
-</footer>
+</footer> -->
 
 </body>
 
 <script src="./fullpage-scroll.js"></script>
-  <script>
-    function updateLogoByBackground() {
-      const header = document.querySelector(".hero-header");
-      const logo = document.querySelector(".hero-header .brand-logo");
-      const sections = document.querySelectorAll("section");
-
-      const centerY = window.innerHeight / 2;
-
-      for (const sec of sections) {
-        const rect = sec.getBoundingClientRect();
-        if (rect.top <= centerY && rect.bottom >= centerY) {
-          const bgColor = window.getComputedStyle(sec).backgroundColor;
-
-          if (bgColor === "rgb(255, 255, 255)") {
-            // 배경이 white일 때
-            logo.src = "./images/logo_blue.png";
-            header.classList.add("scrolled");
-          } else {
-            // 배경이 white가 아닐 때
-            logo.src = "./images/logo.png";
-            header.classList.remove("scrolled");
-          }
-          break;
-        }
-      }
-    }
-
-    window.addEventListener("scroll", updateLogoByBackground);
-    window.addEventListener("resize", updateLogoByBackground);
-    document.addEventListener("DOMContentLoaded", updateLogoByBackground);
-  </script>
-
-  <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector(".wl-form");
-    const popup = document.getElementById("thankyou-popup");
-
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      fetch(form.action, {
-        method: "POST",
-        body: new FormData(form)
-      })
-      .then(res => res.text())
-      .then(text => {
-        console.log("📡 Server response:", text); // 콘솔에 서버 응답 출력
-
-        if (text.includes("SUCCESS")) {
-          popup.style.display = "block";
-          setTimeout(() => popup.style.display = "none", 3000);
-          form.reset();
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const header = document.querySelector(".hero-header");
+    const logo = document.querySelector(".hero-header .brand-logo");
+    const firstSection = document.querySelector(".img-section");
+    if (!firstSection) return;
+ 
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          header.classList.remove("scrolled");
+          logo.src = "./images/logo.png";
         } else {
-          alert("⚠️ Server error: " + text);
+          header.classList.add("scrolled");
+          logo.src = "./images/logo_blue.png";
         }
-      })
-      .catch(err => {
-        console.error("❌ Fetch error:", err);
-        alert("Network error: " + err.message);
       });
-    });
+    }, { threshold: 0.5 });
+ 
+    io.observe(firstSection);
   });
-  </script>
-
+</script>
+ 
 </html>
