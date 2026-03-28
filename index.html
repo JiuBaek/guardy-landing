@@ -37,7 +37,7 @@
         <div class="container nav">
           <img src="./images/logo.png" alt="Guardy" class="brand-logo" loading="lazy"/>
           <nav>
-            <a href="#about">ABOUT US</a>
+            <a href="#real-stories">REAL STORIES</a>
           </nav>
         </div>
       </header>
@@ -54,10 +54,11 @@
     <section class="img-section"><img src="./images/pc_2.png" .../></section>
     <section class="img-section"><img src="./images/pc_3.png" .../></section>
     <section class="img-section"><img src="./images/pc_4.png" .../></section>
+    <section class="img-section"><img src="./images/pc_5.png" .../></section>
   </div>
 
-  <section class="img-section carousel-overlay-section">
-    <img src="./images/pc_5.png" alt="PC Section 5" loading="lazy"/>
+  <section class="img-section carousel-overlay-section" id="real-stories">
+    <img src="./images/pc_6.png" alt="PC Section 5" loading="lazy"/>
     <div class="carousel-wrapper">
       <div class="carousel-track">
         <div class="carousel-card"><img src="./images/review_1.png" .../></div>
@@ -73,8 +74,7 @@
 
   <!-- PC 뒷부분 -->
   <div class="pc-version">
-    <section class="img-section"><img src="./images/pc_6.png" .../></section>
-    <section class="img-section"><img src="./images/pc_footer.png" .../></section>
+    <section class="img-section footer-section"><img src="./images/pc_footer.png" .../></section>
   </div>
 
  
@@ -99,6 +99,9 @@
         <img src="./images/mobile_4.png" alt="Mobile Section 4" loading="lazy"/>
       </section>
       <section class="img-section">
+        <img src="./images/mobile_5.png" alt="Mobile Section 4" loading="lazy"/>
+      </section>
+      <section class="img-section">
         <img src="./images/mobile_6.png" alt="Mobile Section 4" loading="lazy"/>
       </section>
       <section class="img-section">
@@ -111,6 +114,18 @@
     </div>
 
   </main>
+
+  <div class="fixed-download">
+    <button class="download-btn" onclick="toggleStorePopup()">Download Now</button>
+    <div class="store-popup" id="storePopup">
+      <a href="https://apps.apple.com/kr/app/guardy-travel-safety-guide/id6755372577" target="_blank">
+        <i class="fab fa-apple"></i> App Store
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.guardy.template&pcampaignid=web_share" target="_blank">
+        <i class="fab fa-google-play"></i> Google Play
+      </a>
+    </div>
+  </div>
 
 
 
@@ -150,6 +165,7 @@
   </div>
 </footer> -->
 
+
 </body>
 
 <script src="./fullpage-scroll.js"></script>
@@ -173,6 +189,27 @@
     }, { threshold: 0.5 });
  
     io.observe(firstSection);
+  });
+
+  function toggleStorePopup() {
+    const ua = navigator.userAgent;
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    const isAndroid = /Android/i.test(ua);
+ 
+    if (isIOS) {
+      window.open("https://apps.apple.com/kr/app/guardy-travel-safety-guide/id6755372577", "_blank");
+    } else if (isAndroid) {
+      window.open("https://play.google.com/store/apps/details?id=com.guardy.template&pcampaignid=web_share", "_blank");
+    } else {
+      document.getElementById("storePopup").classList.toggle("show");
+    }
+  }
+ 
+  // 팝업 바깥 누르면 닫기
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".fixed-download")) {
+      document.getElementById("storePopup").classList.remove("show");
+    }
   });
 </script>
  

@@ -2,6 +2,10 @@
   --primary: #005DDB;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -52,13 +56,38 @@ body {
 ============================== */
 .img-section {
   width: 100%;
+  height: 100vh;
   line-height: 0; /* 이미지 아래 공백 제거 */
+  overflow: hidden;
 }
 
 .img-section img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
+  object-fit: cover;
+}
+
+@media (max-width: 1023px) {
+  .img-section {
+    height: 100vh;
+    background: #fff; /* 여백 배경색 */
+  }
+
+  .img-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 안 잘리고 화면에 꽉 */
+  }
+}
+
+.footer-section {
+  height: auto; /* 자동 높이 */
+}
+
+.footer-section img {
+  object-fit: unset; /* cover 덮어쓰기 */
+  height: auto;
 }
 
 /* ==============================
@@ -68,6 +97,7 @@ header {
   display: none; /* 모바일 기본: 숨김 */
 }
 
+
 @media (min-width: 1024px) {
   header {
     display: block;
@@ -76,16 +106,16 @@ header {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background-color: transparent;
-    backdrop-filter: blur(2px);
-    transition: background-color 0.3s ease;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 65%);
+    transition: background 0.3s ease;
   }
 }
 
 .hero-header .container.nav {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 25px;
+  padding-left: 100px;
   gap: 20px;
 }
 
@@ -98,9 +128,6 @@ header {
   transition: color 0.3s ease;
 }
 
-.hero-header.scrolled {
-  background-color: rgba(255, 255, 255, 0.95);
-}
 
 .hero-header.scrolled nav a {
   color: var(--primary);
@@ -213,8 +240,8 @@ header {
  
 .carousel-card {
   flex-shrink: 0;
-  width: 900px;
-  height: 500px;
+  width: 44vw;
+  height: 24vw;
 }
  
 .carousel-card img {
@@ -236,7 +263,109 @@ header {
 }
 .carousel-overlay-section .carousel-wrapper {
   position: absolute;
-  bottom: 5%;  /* 이미지 안 파란 네모 위치에 맞게 조절 */
+  bottom: 20%;
   left: 0;
   width: 100%;
 }
+
+/* =====================
+    다운로드 버튼
+=======================*/
+
+.fixed-download {
+  display: flex; /* 모바일도 표시 */
+  position: fixed;
+  bottom: 30vw;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+
+@media (min-width: 1024px) {
+  .fixed-download {
+    display: flex;
+    position: fixed;
+    bottom: 3vw;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+  }
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 30px;
+  background: #fff;
+  color: #005DDB;
+  width: 70vw;
+  height: 11vw;
+  font-weight: 700;
+  font-size: 21px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0, 93, 219, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+ 
+@media (min-width: 1024px) {
+  .download-btn {
+    width: 18vw;
+    height: 4vw;
+    font-size: 24px;
+  }
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 93, 219, 0.35);
+}
+
+/* ==============================
+   스토어 선택 팝업
+============================== */
+.store-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  flex-direction: column;
+  gap: 4px;
+  white-space: nowrap;
+}
+ 
+.store-popup.show {
+  display: flex;
+}
+ 
+.store-popup a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  color: #005DDB;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+ 
+.store-popup a:hover {
+  background: #f0f4ff;
+}
+ 
+.store-popup i {
+  font-size: 18px;
+}
+ 
