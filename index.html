@@ -170,26 +170,7 @@
 
 <script src="./fullpage-scroll.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const header = document.querySelector(".hero-header");
-    const logo = document.querySelector(".hero-header .brand-logo");
-    const firstSection = document.querySelector(".img-section");
-    if (!firstSection) return;
- 
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          header.classList.remove("scrolled");
-          logo.src = "./images/logo.png";
-        } else {
-          header.classList.add("scrolled");
-          logo.src = "./images/logo_blue.png";
-        }
-      });
-    }, { threshold: 0.5 });
- 
-    io.observe(firstSection);
-  });
+  /* 헤더 로고 전환은 fullpage-scroll.js 에서 처리 */
 
   function toggleStorePopup() {
     const ua = navigator.userAgent;

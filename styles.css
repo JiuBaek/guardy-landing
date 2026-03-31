@@ -19,6 +19,13 @@ body {
   color: #0f172a;
 }
 
+@media (max-width: 1023px) {
+  html, body {
+    overflow-y: auto !important;
+    height: auto !important;
+  }
+}
+
 /* ==============================
    PC / 모바일 전환 핵심 로직
    기준: 1024px
