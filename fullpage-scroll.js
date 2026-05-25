@@ -38,7 +38,75 @@
     return; /* 모바일은 여기서 끝 */
   }
 
-  /* ── 4. PC 풀페이지 스크롤 ── */
+  /* ── 4. PC 자연 스크롤 ── */
+  /* 스크롤 확실히 풀기 */
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
+
+  /* ── #real-stories 링크 ── */
+  document.querySelector('a[href="#real-stories"]')?.addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById("real-stories")?.scrollIntoView({ behavior: "smooth" });
+  });
+
+  /* 헤더: 최상단이 아니면 scrolled 클래스 / 로고 교체 */
+  function initPCScroll() {
+    const header = document.querySelector(".hero-header");
+    const logo   = document.querySelector(".hero-header .brand-logo");
+    const dlBtn  = document.querySelector(".fixed-download");
+    const dotsEl = document.getElementById("pageDots");
+    const dotEls = dotsEl ? dotsEl.querySelectorAll(".dot") : [];
+    if (dlBtn) dlBtn.style.display = "none"; /* 초기 숨김 */
+
+    /* 헤더 / 다운로드 버튼 스크롤 전환 */
+    window.addEventListener("scroll", () => {
+      const scrolled = window.scrollY > window.innerHeight * 0.5;
+      if (header) header.classList.toggle("scrolled", scrolled);
+      if (logo) logo.src = scrolled ? "./images/logo_blue.png" : "./images/logo.png";
+      if (dlBtn) dlBtn.style.display = scrolled ? "flex" : "none";
+    }, { passive: true });
+
+    /* dot 인디케이터: pc_1~pc_4 구간에서 표시 */
+    const allSections = [
+      ...document.querySelectorAll(".pc-version .img-section:not(.footer-section), .carousel-overlay-section"),
+    ];
+    /* allSections[1]~[4] 가 pc_1~pc_4 */
+    const dotSections = allSections.slice(1, 5);
+
+    if (dotsEl && dotSections.length) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const idx = dotSections.indexOf(entry.target);
+          if (idx === -1) return;
+          dotsEl.style.opacity = "1";
+          dotEls.forEach((dot, i) => dot.classList.toggle("active", i === idx));
+        });
+      }, { threshold: 0.5 });
+
+      dotSections.forEach((sec) => observer.observe(sec));
+
+      /* dot 구간 벗어나면 숨기기 */
+      const hideObserver = new IntersectionObserver((entries) => {
+        const anyVisible = dotSections.some((sec) => {
+          const r = sec.getBoundingClientRect();
+          return r.top < window.innerHeight * 0.5 && r.bottom > window.innerHeight * 0.5;
+        });
+        if (dotsEl) dotsEl.style.opacity = anyVisible ? "1" : "0";
+      }, { threshold: 0 });
+
+      [...allSections.slice(0, 1), ...allSections.slice(5)].forEach((sec) => hideObserver.observe(sec));
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPCScroll);
+  } else {
+    initPCScroll();
+  }
+
+  /* ── [비활성] PC 풀페이지 스크롤 (다시 쓰려면 아래 주석 해제) ──
+
   function initPC() {
 
     const sections = [
@@ -54,11 +122,9 @@
     const DURATION = 750;
     const EASE     = () => `transform ${DURATION}ms cubic-bezier(0.77, 0, 0.18, 1)`;
 
-    /* 스크롤 막기 (PC만) */
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
 
-    /* 섹션 초기화 */
     sections.forEach((sec, i) => {
       sec.style.position   = "fixed";
       sec.style.top        = "0";
@@ -71,7 +137,6 @@
       sec.style.overflow   = "hidden";
     });
 
-    /* footer 초기화 */
     if (footerEl) {
       footerEl.style.position   = "fixed";
       footerEl.style.top        = "auto";
@@ -85,7 +150,6 @@
       footerEl.style.transition = "none";
     }
 
-    /* ── 헤더 + 다운로드 버튼 + dot 인디케이터 전환 ── */
     function updateUI(idx) {
       const header = document.querySelector(".hero-header");
       const logo   = document.querySelector(".hero-header .brand-logo");
@@ -96,7 +160,6 @@
       }
       if (dlBtn) dlBtn.style.display = (idx === 0 || inFooter) ? "none" : "flex";
 
-      /* dot 인디케이터: 섹션 1~4 (pc_1~pc_4) 구간에서만 표시 */
       const dotsEl = document.getElementById("pageDots");
       if (dotsEl) {
         const showDots = idx >= 1 && idx <= 4 && !inFooter;
@@ -107,7 +170,6 @@
       }
     }
 
-    /* ── 섹션 이동 ── */
     function goTo(next) {
       if (locked || next === current) return;
       if (next < 0 || next >= sections.length) return;
@@ -123,7 +185,6 @@
       setTimeout(() => { current = next; locked = false; }, DURATION);
     }
 
-    /* ── footer 진입 / 탈출 ── */
     function enterFooter() {
       if (!footerEl || locked) return;
       locked = true; inFooter = true;
@@ -153,7 +214,6 @@
       else goTo(current - 1);
     }
 
-    /* ── 휠 ── */
     window.addEventListener("wheel", (e) => {
       e.preventDefault();
       if (locked) return;
@@ -166,13 +226,11 @@
       e.deltaY > 0 ? next() : prev();
     }, { passive: false });
 
-    /* ── 키보드 ── */
     window.addEventListener("keydown", (e) => {
       if (e.key === "ArrowDown" || e.key === "PageDown") next();
       else if (e.key === "ArrowUp" || e.key === "PageUp") prev();
     });
 
-    /* ── 터치 (PC 터치스크린) ── */
     let ty = 0, tx = 0;
     window.addEventListener("touchstart", (e) => {
       ty = e.touches[0].clientY; tx = e.touches[0].clientX;
@@ -185,7 +243,6 @@
       dy > 0 ? next() : prev();
     }, { passive: true });
 
-    /* ── #real-stories 링크 ── */
     document.querySelector('a[href="#real-stories"]')?.addEventListener("click", (e) => {
       e.preventDefault();
       const was = inFooter;
@@ -203,5 +260,7 @@
   } else {
     initPC();
   }
+
+  ── 풀페이지 비활성 끝 ── */
 
 })();
