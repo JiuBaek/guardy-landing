@@ -74,17 +74,18 @@
     /* footer 초기화 */
     if (footerEl) {
       footerEl.style.position   = "fixed";
-      footerEl.style.top        = "0";
+      footerEl.style.top        = "auto";
+      footerEl.style.bottom     = "0";
       footerEl.style.left       = "0";
       footerEl.style.width      = "100%";
-      footerEl.style.height     = "100vh";
-      footerEl.style.overflowY  = "auto";
+      footerEl.style.height     = "auto";
+      footerEl.style.overflowY  = "visible";
       footerEl.style.zIndex     = sections.length + 2;
       footerEl.style.transform  = "translateY(100%)";
       footerEl.style.transition = "none";
     }
 
-    /* ── 헤더 + 다운로드 버튼 전환 ── */
+    /* ── 헤더 + 다운로드 버튼 + dot 인디케이터 전환 ── */
     function updateUI(idx) {
       const header = document.querySelector(".hero-header");
       const logo   = document.querySelector(".hero-header .brand-logo");
@@ -93,7 +94,17 @@
         header.classList.toggle("scrolled", idx !== 0);
         logo.src = idx === 0 ? "./images/logo.png" : "./images/logo_blue.png";
       }
-      if (dlBtn) dlBtn.style.display = idx === 0 ? "none" : "flex";
+      if (dlBtn) dlBtn.style.display = (idx === 0 || inFooter) ? "none" : "flex";
+
+      /* dot 인디케이터: 섹션 1~4 (pc_1~pc_4) 구간에서만 표시 */
+      const dotsEl = document.getElementById("pageDots");
+      if (dotsEl) {
+        const showDots = idx >= 1 && idx <= 4 && !inFooter;
+        dotsEl.style.opacity = showDots ? "1" : "0";
+        dotsEl.querySelectorAll(".dot").forEach((dot, i) => {
+          dot.classList.toggle("active", i === idx - 1);
+        });
+      }
     }
 
     /* ── 섹션 이동 ── */
