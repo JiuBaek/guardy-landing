@@ -58,44 +58,59 @@
     const dotEls = dotsEl ? dotsEl.querySelectorAll(".dot") : [];
     if (dlBtn) dlBtn.style.display = "none"; /* 초기 숨김 */
 
-    /* 헤더 / 다운로드 버튼 스크롤 전환 */
+    /* 히어로 화살표: 다음 섹션으로 스크롤 */
+  const heroArrow = document.getElementById("heroScrollDown");
+  if (heroArrow) {
+    heroArrow.addEventListener("click", () => {
+      const next = document.querySelector(".pc-version .img-section");
+      if (next) next.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  /* 헤더 / 다운로드 버튼 스크롤 전환 */
+    let footerVisible = false;
+    const footerEl = document.querySelector(".pc-version .footer-section");
+    if (footerEl) {
+      new IntersectionObserver((entries) => {
+        footerVisible = entries[0].isIntersecting;
+        if (dlBtn) dlBtn.style.display = footerVisible ? "none" : (window.scrollY > window.innerHeight * 0.5 ? "flex" : "none");
+      }, { threshold: 0.1 }).observe(footerEl);
+    }
+
     window.addEventListener("scroll", () => {
       const scrolled = window.scrollY > window.innerHeight * 0.5;
       if (header) header.classList.toggle("scrolled", scrolled);
       if (logo) logo.src = scrolled ? "./images/logo_blue.png" : "./images/logo.png";
-      if (dlBtn) dlBtn.style.display = scrolled ? "flex" : "none";
+      if (dlBtn) dlBtn.style.display = (!footerVisible && scrolled) ? "flex" : "none";
     }, { passive: true });
 
-    /* dot 인디케이터: pc_1~pc_4 구간에서 표시 */
+    /* dot 인디케이터: pc_1~pc_4 구간에서만 표시
+       allSections[0]=pc_1, [1]=pc_2, [2]=pc_3, [3]=pc_4, [4]=pc_5, [5]=carousel */
     const allSections = [
       ...document.querySelectorAll(".pc-version .img-section:not(.footer-section), .carousel-overlay-section"),
     ];
-    /* allSections[1]~[4] 가 pc_1~pc_4 */
-    const dotSections = allSections.slice(1, 5);
+    const dotSections = allSections.slice(0, 4); // pc_1~pc_4
 
     if (dotsEl && dotSections.length) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           const idx = dotSections.indexOf(entry.target);
-          if (idx === -1) return;
-          dotsEl.style.opacity = "1";
-          dotEls.forEach((dot, i) => dot.classList.toggle("active", i === idx));
+          if (idx !== -1) {
+            dotsEl.style.opacity = "1";
+            dotEls.forEach((dot, i) => dot.classList.toggle("active", i === idx));
+          } else {
+            dotsEl.style.opacity = "0";
+          }
         });
       }, { threshold: 0.5 });
 
-      dotSections.forEach((sec) => observer.observe(sec));
-
-      /* dot 구간 벗어나면 숨기기 */
-      const hideObserver = new IntersectionObserver((entries) => {
-        const anyVisible = dotSections.some((sec) => {
-          const r = sec.getBoundingClientRect();
-          return r.top < window.innerHeight * 0.5 && r.bottom > window.innerHeight * 0.5;
-        });
-        if (dotsEl) dotsEl.style.opacity = anyVisible ? "1" : "0";
-      }, { threshold: 0 });
-
-      [...allSections.slice(0, 1), ...allSections.slice(5)].forEach((sec) => hideObserver.observe(sec));
+      /* 모든 섹션 + 히어로 + pc-5 감시 — dot 구간 여부로 show/hide 결정 */
+      allSections.forEach((sec) => observer.observe(sec));
+      const heroEl = document.querySelector(".pc-hero-section");
+      if (heroEl) observer.observe(heroEl);
+      const pc5El = document.querySelector(".pc-5-section");
+      if (pc5El) observer.observe(pc5El);
     }
   }
 

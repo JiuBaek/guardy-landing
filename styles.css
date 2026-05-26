@@ -26,6 +26,17 @@ body {
   }
 }
 
+/* PC 스크롤 스냅 — pc_1~pc_4만 */
+@media (min-width: 1024px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .snap-section {
+    scroll-snap-align: start;
+  }
+}
+
 /* ==============================
    PC / 모바일 전환 핵심 로직
    기준: 1024px
@@ -259,6 +270,59 @@ header {
   border-radius: 16px;
 }
 
+/* pc_5 / pc_6 공유 배경 — background-attachment: fixed 로 배경 고정 */
+.pc-56-bg {
+  background:
+    /* 3. 상단 oval — 흰색, 모서리 부드럽게 */
+    radial-gradient(ellipse 68% 110% at 50% 0%, #FFFFFF 35%, transparent 72%) fixed,
+    /* 2. 아래→위 2/3 지점까지 FFFFFF→transparent */
+    linear-gradient(to top, #FFFFFF 0%, transparent 66%) fixed,
+    /* 1. 기본: FFFFFF→006EFF 세로 그라데이션 */
+    linear-gradient(180deg, #FFFFFF, #006EFF) fixed;
+}
+
+/* ── pc_5 ── */
+.pc-5-section {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .pc-5-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+  }
+}
+
+.pc-5-content {
+  text-align: center;
+}
+
+.pc-5-title {
+  font-family: 'Pretendard', system-ui, sans-serif;
+  font-size: 64px;
+  font-weight: 600;
+  color: #005DDB;
+  margin-bottom: 20px;
+}
+
+.pc-5-logo {
+  height: 0.85em;
+  width: auto;
+  vertical-align: middle;
+  margin-bottom: 0.1em;
+}
+
+.pc-5-subtitle {
+  font-family: 'Pretendard', system-ui, sans-serif;
+  font-size: 34px;
+  font-weight: 300;
+  color: #005DDB;
+  letter-spacing: 0.04em;
+}
+
+/* ── pc_6 (carousel) ── */
 .carousel-overlay-section {
   display: none;
 }
@@ -268,11 +332,131 @@ header {
     position: relative;
   }
 }
+
+.pc-6-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  position: absolute;
+  top: 18%;
+  left: 0;
+  right: 0;
+}
+
+.pc-6-title {
+  font-family: 'Pretendard', system-ui, sans-serif;
+  font-size: 42px;
+  font-weight: 400;
+  color: #005DDB;
+}
+
+.pc-6-title strong {
+  font-weight: 700;
+}
+
+.quote-icon {
+  font-size: 44px;
+  color: #AFD1FF;
+}
+
 .carousel-overlay-section .carousel-wrapper {
   position: absolute;
-  bottom: 20%;
+  bottom: 15%;
   left: 0;
   width: 100%;
+}
+
+/* ==============================
+   PC Hero Section (pc_guardy 대체)
+============================== */
+.pc-hero-section {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .pc-hero-section {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #FFFFFF;
+  }
+}
+
+.pc-hero-section::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle at center,
+    #005DDB 0%,
+    #0068F1 25%,
+    #AFD1FF 55%,
+    #FFFFFF 85%
+  );
+  animation: radialPulse 3s ease-in-out infinite;
+}
+
+@keyframes radialPulse {
+  0%, 100% { transform: scale(0.55); }
+  50%       { transform: scale(1.0); }
+}
+
+.hero-center {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.hero-wordmark {
+  height: 150px;
+  width: auto;
+}
+
+.hero-bold {
+  font-weight: 600;
+}
+
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.88);
+  font-family: 'Pretendard', system-ui, sans-serif;
+  font-size: 38px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+.hero-scroll-down {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  animation: heroBounce 2s ease-in-out infinite;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+  z-index: 1;
+}
+
+.hero-scroll-down:hover {
+  opacity: 1;
+}
+
+@keyframes heroBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(10px); }
 }
 
 /* ==============================
